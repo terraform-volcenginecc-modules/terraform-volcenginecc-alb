@@ -1,88 +1,83 @@
 # terraform-volcenginecc-alb
 
-Terraform Module scaffold for the VolcengineCC provider.
+## 1. Overview
 
-> Status: Scaffold only. The Terraform implementation for this repository is
-> not available yet, and this repository is not ready for production use.
+Terraform module for managing Volcengine ALB resources with the `volcenginecc` provider. The caller owns provider authentication, region configuration, and external resources passed by ID.
 
-## Overview
+## 2. Usage
 
-This repository reserves the module name `volcengine/alb/volcenginecc`.
+```hcl
+module "alb" {
+  source  = "terraform-volcenginecc-modules/alb/volcenginecc"
+  version = "~> 1.0"
 
-The module is intended to provide a reusable Terraform abstraction for the
-`alb` scenario using the `volcengine/volcenginecc` provider.
+  # Set the required module inputs for your environment.
+}
+```
 
-Current scope:
+## 3. Examples
 
-- Repository and module scaffold only.
-- No Terraform resources or data sources are currently managed.
-- No production-readiness or real-cloud validation claim is made.
+- `basic`: independently runnable basic configuration.
+- `complete`: independently runnable complete configuration.
 
-## Usage
-
-The module implementation is not available yet. A runnable configuration will
-be added together with the first implementation release.
-
-Provider authentication and region configuration must be supplied by the
-caller. Do not commit credentials, access keys, secrets, Terraform state, or
-plan files.
-
-## Examples
-
-Examples will be added when the module implementation is available.
-
-Planned examples:
-
-- `examples/basic`
-- `examples/complete`
-
-## Requirements
+## 4. Requirements
 
 | Name | Version |
 |---|---|
-| Terraform | To be defined with the first implementation |
-| `volcengine/volcenginecc` | To be defined with the first implementation |
+| Terraform | `>= 1.5.7` |
+| OpenTofu | `>= 1.11.8` |
 
-## Providers
+## 5. Providers
 
 | Name | Source |
 |---|---|
 | `volcenginecc` | `volcengine/volcenginecc` |
 
-## Resources
+## 6. Resources
 
-No resources or data sources are currently managed.
+| Name | Description |
+|---|---|
+| `volcenginecc_alb_load_balancer` | Module-defined volcenginecc_alb_load_balancer. |
+| `volcenginecc_alb_server_group` | Module-defined volcenginecc_alb_server_group. |
+| `volcenginecc_alb_listener` | Module-defined volcenginecc_alb_listener. |
+| `volcenginecc_alb_rule` | Module-defined volcenginecc_alb_rule. |
 
-The resource inventory will be documented before the first release.
+## 7. Inputs
 
-## Inputs
+| Name | Description |
+|---|---|
+| `load_balancer_name` | Module-defined load_balancer_name. |
+| `vpc_id` | Module-defined vpc_id. |
+| `zone_mappings` | Module-defined zone_mappings. |
+| `type` | Module-defined type. |
+| `address_ip_version` | Module-defined address_ip_version. |
+| `load_balancer_edition` | Module-defined load_balancer_edition. |
+| `load_balancer_billing_type` | Module-defined load_balancer_billing_type. |
+| `description` | Module-defined description. |
+| `project_name` | Module-defined project_name. |
+| `delete_protection` | Module-defined delete_protection. |
+| `modification_protection_status` | Module-defined modification_protection_status. |
+| `modification_protection_reason` | Module-defined modification_protection_reason. |
+| `eip_billing_config` | Module-defined eip_billing_config. |
+| `tls_access_log` | Module-defined tls_access_log. |
+| `health_log` | Module-defined health_log. |
+| `tags` | Module-defined tags. |
+| `server_groups` | Module-defined server_groups. |
+| `listeners` | Module-defined listeners. |
+| `rules` | Module-defined rules. |
 
-No input variables are currently defined.
+## 8. Outputs
 
-All inputs will document their type, default value, required status,
-validation, ownership, and replacement behavior when implemented.
+| Name | Description |
+|---|---|
+| `load_balancer_id` | Module-defined load_balancer_id. |
+| `dns_name` | Module-defined dns_name. |
+| `server_group_ids` | Module-defined server_group_ids. |
+| `listener_ids` | Module-defined listener_ids. |
+| `rule_ids` | Module-defined rule_ids. |
 
-## Outputs
+## 9. Notes
 
-No outputs are currently defined.
-
-Outputs will document their exact semantics when implemented.
-
-## Notes
-
-- This repository is currently a scaffold and is not a publishable functional
-  module.
-- Real-cloud validation has not been performed.
-- Provider limitations and unsupported scenarios will be documented before
-  release.
-- Resource ownership, import behavior, replacement behavior, cost risks, and
-  cleanup procedures must be documented before the first release.
-
-## Security
-
-Please report security issues according to the [Security Policy](SECURITY.md).
-Do not disclose security vulnerabilities through public issues.
-
-## License
-
-This project is licensed under the MIT License. See [LICENSE](LICENSE).
+- Configure credentials using supported provider mechanisms; do not put access keys in module files.
+- Review replacement behavior and provider constraints before applying changes.
+- Run `terraform plan` after apply and confirm that the second plan has no changes.
